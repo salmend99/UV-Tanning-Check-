@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>UV Index Checker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 2rem;
+    }
+    input, button {
+      padding: 0.5rem;
+      margin: 0.3rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>☀️ UV Index Checker</h1>
+
+  <!-- Form to submit lat/lng manually or programmatically -->
+  <form id="location-form" action="/" method="get">
+    <!-- Latitude input (required) -->
+    <input type="text" name="lat" id="lat" placeholder="Latitude" value="<%= lat %>" required>
+    <!-- Longitude input (required) -->
+    <input type="text" name="lng" id="lng" placeholder="Longitude" value="<%= lng %>" required>
+    <!-- Manual submit button -->
+    <button type="submit">Check UV Index</button>
+  </form>
+
+  <!-- Button to trigger geolocation and auto-submit form -->
+  <button onclick="getLocation()">📍 Use My Location</button>
+
+  <script>
+    // This function uses the browser's geolocation API to get user's location
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          // On success: populate lat/lng inputs with coordinates
+          document.getElementById('lat').value = position.coords.latitude;
+          document.getElementById('lng').value = position.coords.longitude;
+          // Submit the form with user coordinates
+          document.getElementById('location-form').submit();
+        }, function(error) {
+          // On error: show alert if user blocks or location fails
+          alert("Location access denied or failed.");
+        });
+      } else {
+        // Browser doesn't support geolocation
+        alert("Geolocation is not supported by this browser.");
+      }
+    }
+  </script>
+
+  <!-- Show UV index if it's available -->
+  <% if (uv) { %>
+    <h2>UV Index at (<%= lat %>, <%= lng %>): <%= uv %></h2>
+  <% } else { %>
+    <!-- Show error message if no UV data -->
+    <h2 style="color: red;">⚠️ Could not fetch UV index.</h2>
+  <% } %>
+</body>
+</html>
+<!-- This is the main HTML template for the UV Index Checker application -->

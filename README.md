@@ -1,6 +1,8 @@
 # 🌞 UV Index Checker App
 
-## 🛠 Technologies Used
+TO START: npm install = This will install express, axios, and ejs as listed in your package.json.
+
+## 🛠 Technologies Used     
 
 ### 🧩 Backend
 - **Node.js** – JavaScript runtime environment
